@@ -1,0 +1,92 @@
+.mileage-title{
+    margin-top: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.ml{
+    margin-left: 20px;
+}
+
+.sidebar-title{
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.sidebar-items{
+    margin-top:10px;
+}
+
+.sidebar-label-container{
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 5px;
+    margin-right: 50px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.sidebar-label-container input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.checkmark{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 12px;
+    width: 12px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.sidebar-label-container:hover input~.checkmark{
+    background-color: #ccc;
+}
+
+.sidebar-label-container input:checked~.checkmark{
+    background-color: #2196f3;
+}
+
+.checkmark::after{
+    content:"";
+    position: absolute;
+    display: none;
+}
+
+.sidebar-label-container input:checked~.checkmark::after{
+    display:block;
+}
+
+.sidebar-label-container.checkmark::after{
+    top:6.4px;
+    left:6.4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background:white;
+}
+.line{
+    margin-top: 3rem;
+    border-color: #f7f7f7;
+}
+
+.multi-range-slider-container {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .divOutput {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: normal;
+  }
+  
