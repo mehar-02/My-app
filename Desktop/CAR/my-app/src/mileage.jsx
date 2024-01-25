@@ -1,23 +1,12 @@
 import React, { useState } from "react";
-import MultiRangeSlider, { ChangeResult } from "multi-range-slider-react";
+import MultiRangeSlider from "multi-range-slider-react";
 import "./mileage.css";
-function Mileage({onMinMileChange, onMaxMileChange,min,max}){
-   
-   const [minValue, setMinValue] = useState(min);
-   const [maxValue, setMaxValue] = useState(max);
-   const [slidertimeout, setslidertimeout] = useState(null);
-  
-   const handleSliderChange=(minMile,maxMile)=>{
-      console.log("Slider Change:", minMile, maxMile);
-      if(slidertimeout){
-         clearTimeout(slidertimeout);
-      }
-      const newTimeout=setTimeout(()=>{
-         onMinMileChange(minValue);
-         onMaxMileChange(maxValue);
-      },10);
-      setslidertimeout(newTimeout);
-   };
+function Mileage({onMileChange,min,max, minChange, maxChange}){
+
+  const handleSliderChange = (minMile, maxMile) => {
+    console.log("Mil age change")
+    onMileChange(minMile,maxMile);
+  }
    return <div className="ml">
          
          <div className="sidebar-items">
@@ -27,25 +16,24 @@ function Mileage({onMinMileChange, onMaxMileChange,min,max}){
           max={max}
           canMinMaxValueSame={true}
           onChange={(e) => {
-            setMinValue(e.minValue);
-            setMaxValue(e.maxValue);
-            handleSliderChange(minValue,maxValue);
+            // console.log("event", e)
+            handleSliderChange(e.minValue,e.maxValue);
           }}
 
           label={false}
           ruler={false}
-          style={{ border: "none", boxShadow: "none", padding: "15px 10px" }}
+          style={{ border: "none", boxShadow: "none", padding: "15px 10px 15px 30px", width:"70%" }}
           barLeftColor="#FFF8E3"
           barInnerColor="#F3D7CA"
           barRightColor="#FFF8E3"
           thumbLeftColor="#E6A4B4"
           thumbRightColor="#E6A4B4"
+          minValue={minChange}
+          maxValue={maxChange}
         />
         <div className="divOutput">
-          <div>
-            <span>min: {minValue} miles, </span>
-            <span className="max-value"> max: {maxValue} miles </span>
-          </div>
+            <span className="minMile">min: {minChange} mpg, </span>
+            <span className="max-value maxMile"> max: {maxChange} mpg </span>
         </div>
         </label>
     </div>

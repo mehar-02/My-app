@@ -1,63 +1,53 @@
-import React, { useState } from "react";
+import React from "react";
 import Price from "./price.jsx";
 import Color from "./color.jsx";
 import Mileage from "./mileage.jsx";
 
 import "./sidebar.css";
 
-function Sidebar({onColorSelect, onMinPriceSelect, onMaxPriceSelect, onMinMileSelect, onMaxMileSelect, color,minPrice,maxPrice,minMile,maxMile}){
-    // const [color, setColor] = useState('');
-    // const [minPrice, setMinPrice] = useState('');
-    // const [maxPrice, setMaxPrice] = useState('');
-    // const [minMile, setMinMile] = useState('');
-    // const [maxMile, setMaxMile] = useState('');
+function Sidebar({onColorSelect, onPriceSelect, onMileSelect, onClear,color,minPrice,maxPrice,minMile,maxMile, minPriceChange, maxPriceChange, minMileChange, maxMileChange}){
     
     const handleColor= (newcolor) => {
-        // setColor(newcolor);
         onColorSelect(newcolor);
     }
-    const handleMinPrice = (newMin) => {
-        // setMinPrice(newMin);
-        onMinPriceSelect(newMin);
+    const handlePrice = (newMin,newMax) => {
+        onPriceSelect(newMin,newMax);
     }
-    const handleMaxPrice = (newMax) => {
-        // setMaxPrice(newMax);
-        onMaxPriceSelect(newMax);
+    const handleMile = (newMin, newMax) => {
+        onMileSelect(newMin,newMax);
     }
-    const handleMinMile = (newMin) => {
-        // setMinMile(newMin);
-        onMinMileSelect(newMin);
-    }
-    const handleMaxMile = (newMax) => {
-        // setMaxMile(newMax);
-        onMaxMileSelect(newMax);
-    }
-    // const resetFilters = () => {
-    //     setColor('');
-    //     setMinPrice('');
-    //     setMaxPrice('');
-    //     setMinMile('');
-    //     setMaxMile('');
-    // };
+    // const handleClear = (newcolor) => {
+    //     onClear();
+    // }
     return (
         <section className="sidebar">
-        <div class="filter">
+        <div className="filter">
+            <button className="clear-filters-btn btns" onClick={onClear} >
+               Clear Filters
+            </button>
            <h2 className="sidebar-title price-title">Price</h2>
-           <Price min="20000" max="60000" onMinPriceChange={handleMinPrice} onMaxPriceChange={handleMaxPrice} />
-           {/* <Price name="Rs. 50,000 - Rs.1,00,000" min="50000" max="100000" onMinPriceChange={handleMinPrice} onMaxPriceChange={handleMaxPrice} />
-           <Price name="Rs. 1,00,000 - Rs. 6,00,000" min="100000" max="600000" onMinPriceChange={handleMinPrice} onMaxPriceChange={handleMaxPrice} />
-           <Price name="Over Rs. 6,00,000" min="600000" max="99999999" onMinPriceChange={handleMinPrice} onMaxPriceChange={handleMaxPrice} /> */}
+           <Price min={minPrice} max={maxPrice} minChange={minPriceChange} maxChange={maxPriceChange} onPriceChange={handlePrice} />
+           
            <h2 className="sidebar-title color-title">Color</h2>
+           <div className="colors">
+           <div className="div1" style={{width: "35%"}}>
+           <Color name="All" onColorChange={handleColor} />
            <Color name="Red" onColorChange={handleColor} />
            <Color name="Blue" onColorChange={handleColor} />
+           </div>
+           <div className="div2" style={{width: "35%"}}>
            <Color name="Black" onColorChange={handleColor} />
            <Color name="White" onColorChange={handleColor} />
            <Color name="Silver" onColorChange={handleColor} />
-           <h2 className="sidebar-title mileage-title">Mileage</h2>
-           <Mileage min="30" max="140" onMinMileChange={handleMinMile} onMaxMileChange={handleMaxMile} />
-           {/* <Mileage name="Over 20,000 miles" min="20000" max="999999" onMinMileChange={handleMinMile} onMaxMileChange={handleMaxMile} /> */}
            </div>
-           {/* <button class="btns clear" onClick={resetFilters}>Clear Filters</button> */}
+           </div>
+
+           <h2 className="sidebar-title mileage-title">Mileage</h2>
+           <Mileage min={minMile} max={maxMile} minChange={minMileChange} maxChange={maxMileChange} onMileChange={handleMile} />
+
+            
+
+        </div>
         </section>
     );
 }

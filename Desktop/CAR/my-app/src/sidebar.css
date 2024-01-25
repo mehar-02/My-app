@@ -2,7 +2,8 @@
     font-size: 17px;
     font-weight: bold;
     margin-bottom: 20px;
-    margin-left: 50px;
+    margin-left: 70px;
+    /* margin-top: 50px; */
 }
 
 .color-title{
@@ -12,11 +13,24 @@
 .clear{
     margin-top: 10px;
 }
+
+.clear-filters-btn{
+   margin-left:225px;
+   font-size: small;
+   border: 1px solid #ededed;
+   /* justify-content: flex-end; */
+}
+.colors{
+    display: flex;
+    padding-right: 2rem;
+}
 .sidebar{
-    width: 18rem;
+    width: 20rem;
     position: fixed;
     height: 100%;
     border-right: 2px solid #e5e5e5;
+    /* padding-right: 2rem; */
+    padding-left: 5rem;
     z-index: 3;
     display: flex;
     flex-direction: column;
@@ -25,9 +39,12 @@
 }
 
 .filter{
-    margin-top: 1.25rem;
+    margin-top: 0.15rem;
 }
-
+.div2{
+    
+    padding-right: 2rem;
+}
 @media screen and (max-width: 600px) {
     .sidebar {
         margin-left: 0; 
@@ -36,7 +53,7 @@
       height: auto;
       position: relative;
       border-right: none;
-      overflow-y: auto;
+      overflow-y: none;
       max-height: 80vh;
     }
   }

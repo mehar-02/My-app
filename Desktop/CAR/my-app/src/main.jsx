@@ -13,37 +13,59 @@ function Main(){
     const [minPrice, setMinPrice] = useState(20000);
     const [maxPrice, setMaxPrice] = useState(60000);
 
+    const [minPriceChange, setMinPriceChange] = useState(20000);
+    const [maxPriceChange, setMaxPriceChange] = useState(60000);
+
     const [searchQuery, setSearchQuery] = useState(null);
     
     const [minMile, setMinMile] = useState(30);
     const [maxMile, setMaxMile] = useState(140);
 
+    const [minMileChange, setMinMileChange] = useState(30);
+    const [maxMileChange, setMaxMileChange] = useState(140);
+
     const [filterApplied, setFilterApplied] = useState(false);
+    const [load, setLoad] = useState(false);
+
+    // const [checked, setChecked] = useState(false);
+
     const handleColorSelect = (newcolor) => {
       setFilterApplied(true);
+      // setChecked(true);
         setColor(newcolor);
     };
-    const handleMinPriceSelect = (newMinPrice) => {
+
+    const handlePriceSelect = (newMinPrice, newMaxPrice) => {
       setFilterApplied(true);
-      setMinPrice(newMinPrice);
+      setMinPriceChange(newMinPrice);
+      setMaxPriceChange(newMaxPrice);
     }
-    const handleMaxPriceSelect = (newMaxPrice) => {
+
+    const handleMileSelect = (newMinMile, newMaxMile) => {
+      console.log("Handle mil change")
       setFilterApplied(true);
-      setMaxPrice(newMaxPrice);
+      //console.log("main min price", newMinMile)
+      setMinMileChange(newMinMile);
+      setMaxMileChange(newMaxMile);
     }
-    const handleMinMileSelect = (newMinMile) => {
-      setFilterApplied(true);
-      setMinMile(newMinMile);
-    }
-    const handleMaxMileSelect = (newMaxMile) => {
-      setFilterApplied(true);
-      setMaxMile(newMaxMile);
-    }
+  
     const handleSearch = (newCars) => {
         console.log("handle search",newCars)
         setCars(newCars);
         setFilterApplied(true);
     };
+    
+    const handleClearFilters = () => {
+      setMinMileChange(minMile);
+      setMaxMileChange(maxMile);
+      // setSearchQuery("");
+      setColor("All");
+      setMinPriceChange(20000);
+      setMaxPriceChange(60000);
+    
+      setFilterApplied(false);
+    };
+
   useEffect(() => {
     async function fetchCarsData(){
         try{
@@ -51,18 +73,19 @@ function Main(){
             if(color){
                 queryObject.color=color;
             }
-            if(minPrice){
-              queryObject.minPrice=minPrice;
+            if(minMileChange){
+              queryObject.minMile=minMileChange;
             }
-            if(maxPrice){
-              queryObject.maxPrice=maxPrice;
+            if(maxMileChange){
+              queryObject.maxMile=maxMileChange;
             }
-            if(minMile){
-              queryObject.minMile=minMile;
+            if(minPriceChange){
+              queryObject.minPrice=minPriceChange;
             }
-            if(maxMile){
-              queryObject.maxMile=maxMile;
+            if(maxPriceChange){
+              queryObject.maxPrice=maxPriceChange;
             }
+            
              //const response = await axios.get('http://localhost:5000/api/data',{
              const response = await axios.get('https://cars-backend-six.vercel.app/api/data',{
                 params:queryObject
@@ -74,12 +97,13 @@ function Main(){
            }
         }
         fetchCarsData();
-},[color,minPrice,maxPrice,minMile,maxMile]);
+},[color,minPriceChange,maxPriceChange,minMileChange,maxMileChange]);
 
 
   const fetchSearch = async (searchQuery) => {
     try{
       console.log("Search Query:", searchQuery);
+
         if(searchQuery!==null && searchQuery!==''){
             let queryObject = {
               searchQuery: searchQuery
@@ -100,23 +124,30 @@ function Main(){
         console.error("Error: ",error);
     }
 }
+
 console.log("Cars ", cars)
     return (
         <div className={filterApplied ? "main-container with-filter" : "main-container"}>
            
-            <Navbar onSearch = {fetchSearch} />
+            <Navbar onSearch = {fetchSearch} filter={filterApplied} />
             <Sidebar 
               onColorSelect={handleColorSelect} 
-              onMinPriceSelect={handleMinPriceSelect} 
-              onMaxPriceSelect={handleMaxPriceSelect} 
-              onMinMileSelect={handleMinMileSelect} 
-              onMaxMileSelect={handleMaxMileSelect} 
+              onPriceSelect={handlePriceSelect} 
+              // onMaxPriceSelect={handleMaxPriceSelect} 
+              onMileSelect={handleMileSelect} 
+              // onMaxMileSelect={handleMaxMileSelect} 
+              onClear={handleClearFilters}
               color={color}
               minPrice={minPrice}
               maxPrice={maxPrice}
               minMile={minMile}
               maxMile={maxMile}
+              minPriceChange={minPriceChange}
+              maxPriceChange={maxPriceChange}
+              minMileChange={minMileChange}
+              maxMileChange={maxMileChange}
               />
+            
             <Product cars={cars} />
         </div>
     );

@@ -1,20 +1,22 @@
 const express = require('express');
-var mysql = require('mysql2');
+var mysql = require('mysql2/promise');
 const cors = require('cors');
 
 const app = express();
 app.use(express.json());
 const port = 5000;
 
-//const port = 51944;
 
 app.use(cors("*"));
-var connection = mysql.createConnection({
+const pool = mysql.createPool({
     host: 'monorail.proxy.rlwy.net',
     user: 'root',
     password: 'dG2C33aDAa4hh1BHc-G51ddfBFeG34ec',
     database: 'railway',
-    port:'51944'
+    port:'51944',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
     // host:'localhost',
     // user:'root',
     // password:'Mehar.2001',
@@ -22,34 +24,32 @@ var connection = mysql.createConnection({
     // port: '3306'
 });
 
-connection.connect(function(error){
-    if(error){
-        console.error('Error: ', error);
-    }
-    else{
-        console.log('Connected');
-    }
-});
+
+pool.getConnection()
+    .then(connection => {
+        console.log('Connected to MySQL');
+    })
+    .catch(error => {
+        console.error('Error connecting to MySQL:', error);
+    });
 
 
-app.get('/api/data', (req, res) => {
+app.get('/api/data', async (req, res) => {
     console.log('Received request with query parameters:', req.query);
-    const colors=req.query.color;
-
-   const minPrice=req.query.minPrice;
-   const maxPrice=req.query.maxPrice;
    
-    const minMile=req.query.minMile;
-    const maxMile=req.query.maxMile;
-
     try {
+        const colors=req.query?.color;
+
+        const minPrice=req.query?.minPrice ;
+        const maxPrice=req.query?.maxPrice;
+        
+         const minMile=req.query?.minMile;
+         const maxMile=req.query?.maxMile;
+     
         let filter=[];
     var sql=`SELECT * FROM Marketplace_Inventory JOIN OEM_Specs ON (OEM_Specs.car_id = Marketplace_Inventory.car_id) WHERE 1=1`;
-    //if(colors){
     if(colors==="All"){
-        // filter.push(colors);
-        // //sql += ` AND color= "${req.query.color}"`;
-        // var sql=`SELECT * FROM Marketplace_Inventory JOIN OEM_Specs ON (OEM_Specs.car_id = Marketplace_Inventory.car_id) WHERE 1=1`;
+        
     }
     else{
         filter.push(colors);
@@ -69,77 +69,47 @@ app.get('/api/data', (req, res) => {
         sql += ` AND list_price BETWEEN ${req.query.minPrice} AND ${req.query.maxPrice}`;
     }
     console.log(sql);
-    connection.query(sql, filter, (err, result) => {
-    if (err) {
-        console.log(err)
-      res.status(500).send(err);
-      return;
-    }
-    console.log(result);
-    res.send(result);
+    const [results]  = await pool.query(sql, filter);
+    res.send(results);
 
-  });
     } catch (error) {
-        console.log(error)
+        res.send(error);
     }
-    
-    
 });
 
-app.get('/api/count', (req,res) => {
-    let sql = 'SELECT COUNT(*) AS count FROM OEM_Specs';
-    connection.query(sql, (error, results, fields) => {
-        if(error){
-            console.log(error);
-            res.status(500).send(error,message);
-            return;
-        }
-        res.json(results);
-    });
-});
+// app.get('/api/count', await (req,res) => {
+//     let sql = 'SELECT COUNT(*) AS count FROM OEM_Specs';
+//     connection.query(sql, (error, results, fields) => {
+//         if(error){
+//             console.log(error);
+//             res.status(500).send(error);
+//             return;
+//         }
+//         res.send(results);
+//     });
+// });
 
-app.get('/api/search', (req, res) => {
-    const searchQuery = req.query.search;
+app.get('/api/search', async (req, res) => {
 
     try {
-        
+       const searchQuery = req.query.search;
+        let sql;
     if(searchQuery!==null && searchQuery!==''){
-    let sql = `SELECT * FROM OEM_Specs JOIN Marketplace_Inventory ON (OEM_Specs.car_id = Marketplace_Inventory.car_id) WHERE model_name="${searchQuery}"`;
-    
-    connection.query(sql, (error, results, fields) => {
-        if(error){
-            console.log(error);
-            res.status(500).send(error);
-            return;
-        }
-        res.send(results);
-    });
+     sql = `SELECT * FROM OEM_Specs JOIN Marketplace_Inventory ON (OEM_Specs.car_id = Marketplace_Inventory.car_id) WHERE model_name LIKE "%${searchQuery}%" OR yearOfModel LIKE "%${searchQuery}%"`; 
     }
     else{
-        let sql = `SELECT * FROM OEM_Specs JOIN Marketplace_Inventory ON (OEM_Specs.car_id = Marketplace_Inventory.car_id) WHERE 1=1`;
-    //console.log(sql);
-    connection.query(sql, (error, results, fields) => {
-        if(error){
-            console.log(error);
-            res.status(500).send(error);
-            return;
-        }
-        res.send(results);
-    });
-    console.log(sql);
+        sql = 'SELECT * FROM OEM_Specs JOIN Marketplace_Inventory ON (OEM_Specs.car_id = Marketplace_Inventory.car_id) WHERE 1=1';
     }
-    } catch (error) {
-        console.log(error)
+    console.log(sql);
+    const [results] = await pool.query(sql, [searchQuery]);
+    res.status(200).send(results);
+}
+     catch (error) {
+        console.error(error);
+    res.status(500).send(error);
     }
     
-})
+});
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-});
-
-process.on('SIGINT', function () {
-    connection.end(function () {
-        console.log('MySQL connection has been closed.');
-        process.exit();
-    });
 });

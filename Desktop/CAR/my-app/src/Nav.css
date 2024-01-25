@@ -86,8 +86,8 @@ input{
     }
 }
 
-@media screen and (max-width: 449px){
-    .nav-container{
+@media screen and (max-width: 470px){
+    input{
         display:none;
     }
 }

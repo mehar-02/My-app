@@ -8,11 +8,10 @@ function Color({onColorChange,name}){
     }
     
  return <div className="ml">
-    
 
     <div className="sidebar-items">
         <label className="sidebar-label-container color">
-            <input type="radio" id={name} name="test" value={name} onChange={handleColorChange} />
+            <input type="radio" id={name} name="test" value={name} onChange={handleColorChange} style={{width:'5rem'}} />
             <span className="checkmark"></span>{name}
         </label>
        

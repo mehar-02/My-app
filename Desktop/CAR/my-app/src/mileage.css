@@ -17,6 +17,12 @@
     margin-top:10px;
 }
 
+.minMile{
+    padding-left: 30px;
+}
+.maxMile{
+    padding-left: 30px;
+}
 .sidebar-label-container{
     display: block;
     position: relative;
