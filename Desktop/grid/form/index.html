@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
+</head>
+<body>
+    <div class="main">
+   <form name="myForm" action="./submit.html" onsubmit="return validateForm()">
+    <div class="title">
+       Sign Up<br>
+    </div>
+    <div class="details">
+    <div class="name-field label-float">
+       <input id="name" type="text" name="name" class="text-field field" required>
+       <label class="floating-label">Name</label><span>*</span>
+       <p id="my-error-message-container" style="display:none; color: red; background-color: white;padding: 5px; width: 280px; margin-left: 20px;"></p>
+    </div> 
+    <div class="email label-float">
+       <input id="email" name="email" class="email-field field" required>
+       <label class="floating-label">Email</label><span>*</span>
+    </div>
+    <div class="gender">
+       <label for="gender">Gender</label><br>
+       <div class="ip">
+          <input id="gender" type="radio">
+          <label for="male">Male</label><br>
+          <input id="gender" type="radio">
+          <label for="female">Female</label><br>
+       </div>
+    </div>
+    <div class="phone label-float">
+        <input id="phone" name="phone" class="phone-field field" required>
+        <label class="floating-label">Phone</label><span>*</span>
+    </div>
+    <div class="terms-conditions">
+        <input type="checkbox" class="check" name="terms" required>
+        <label id="terms" for="terms">Terms and Conditions<span class="star-check">*</span></label><br>
+    </div>
+    <div class="submit-button">
+       <input type="submit" value="Submit" class="submit">
+    </div>
+    <!-- <--<button class="btn submit" onclick="errorMessage()">Submit</button>  --> 
+    
+    </form>
+    </div>
+    <script src='./myscript.js'>
+    </script> 
+</body>
+</html>

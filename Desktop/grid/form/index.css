@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Libre+Baskerville&family=Poppins&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'DM Serif Display', serif;
+    font-family: 'Libre Baskerville', serif;
+    font-family: 'Poppins', sans-serif;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.title{
+    position: absolute;
+    top: 5rem;
+    font-size: 2rem;
+}
+.label-float{
+    position: relative;
+}
+.field {
+    display: inline-block;
+    border: thin solid #fafafa; 
+    border-bottom: solid medium #999;
+    color: #444;
+    background-color: #fafafa;
+    padding: 10px;
+    margin: 15px;
+    width: 100%;
+}
+
+.details {
+    /* position: fixed; */
+    position: absolute;
+    top: 9rem;
+    /* z-index:-1; */
+}
+.floating-label{
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    /* right: 190px; */
+    color: #999;
+    transition: 0.2s;
+    /* position: absolute; */
+    pointer-events: none;
+}
+span{
+    display: none;
+}
+.gender {
+    margin: 15px;
+    /* margin-top: px; */
+    color: #999;
+}
+.ip {
+    margin: 10px 20px;
+}
+.check{
+    width: 10%;
+    padding: 10px;
+    margin: 5px;
+    margin-left: 11px;
+    line-height: normal;
+}
+.terms-conditions { 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+#terms{
+    display: inline-block;
+    width: 250px;
+}
+.star-check {
+    display: inline-block;
+    color:red;
+}
+.submit-button{
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+    color: #999;
+    
+}
+.submit{
+    padding:8px;
+    font-size: 16px;
+    border-radius: 10%;
+    border: 0;
+    background-color:#C7C8CC;
+}
+.field:focus ~ label, .field:valid ~ label , .field:valid:not(:focus) ~ label{
+    position: absolute;
+    color: green;
+    background-color: #fff;
+    left: 25px;
+}
+.field:valid:not(:focus) ~ field, .field:valid ~ .field{
+    border: 2px solid black;
+}
+.field:invalid ~ .field{
+    border: 2px solid red;
+}
+.text-field:focus ~ label, .text-field:valid ~ label{
+    display: block;
+    top:0.2rem;
+    font-size: small;
+    /* padding:10 5px 10 5px; */
+    height: 20px;
+}
+.email-field:focus ~ label {
+    display: block;
+    top:0.2rem;
+    font-size: small;
+    /* color:red;
+    background-color: #fff; */
+    /* padding:10 5px 10 5px; */
+    height: 20px;
+}
+.email-field:valid ~ label {
+    display: block;
+    top:0.2rem;
+    font-size: small;
+    /* color:red;
+    background-color: #fff; */
+    /* padding:10 5px 10 5px; */
+    height: 20px;
+}
+.phone-field:focus ~ label {
+    display: block;
+    top:0.2rem;
+    font-size: small;
+    /* color:red;
+    background-color: #fff; */
+    padding:10 5px 10 5px;
+    height: 20px;
+}
+.phone-field:valid ~ label{
+    display: block;
+    top:0.2rem;
+    font-size: small;
+    /* color:red;
+    background-color: #fff; */
+    padding:10 5px 10 5px;
+    height: 20px;
+}
+/* label {
+    color: #999;
+    position: absolute;
+    pointer-events: none;
+    left: 10px; 
+    transition: 0.2s;
+}
+ .text-field {
+    position: relative; */
+    /* margin: 0px 2.5px 20px 8px; */
+/* }
+.text-field ~ label {  */
+    /* top: 10px; */
+ /* }
+.text-field:focus ~ label, .text-field:valid ~ label {
+    top: -10px;
+    left: 15px;
+    font-size: small;
+    color: red;
+    background-color:#fff;
+    padding:0 5px 0 5px;
+}  */ 
+
+/* .submit {
+    /* display: inline-flex;
+    flex-direction: column; */
+    /* width: 100px; */
+
+/* .text-field {
+    position: relative;
+    margin: 0px 2.5px 20px 8px;
+    
+}
+.email-field{
+    position: absolute;
+    margin: 0px 2.5px 20px 2.5px;
+}
+.phone-field{
+    margin: 10px 2.5px 20px 2.5px;
+}
+.gender {
+    margin-top: 50px;
+    line-height: normal;
+} */
+
+/* 
+
+label {
+    color: #999;
+    position: absolute;
+    pointer-events: none;
+    left: 10px; 
+    transition: 0.2s;
+}
+span{
+    di
+    splay: none;
+}
+
+
+.email-field ~label{
+    top: 70px;
+}
+.email-field:focus ~ label, .email-field:valid ~ label, .email-field:not(:focus):valid ~ label{
+    top: 55px;
+    font-size: small;
+    color: red;
+    background-color:#fff;
+    padding:0 5px 0 5px;
+}
+.email-field:invalid ~ input {
+    border: thin solid red;
+}
+
+.phone-field ~ label{
+    top: 230px;
+}
+.phone-field:focus ~ label, .phone-field:valid ~label{
+    top: 210px;
+    font-size: small;
+    color: red;
+    background-color:#fff;
+    padding:0 5px 0 5px;
+
+}*/
+/* .ip{
+    display: inline;
+    line-height: normal;
+}
+.ip > label {
+    left: 25px;
+}
+
+.terms-conditions > label{
+    left: 22px;
+}
+
+
+.details {
+    position: absolute;
+}
+.name, .email, .gender, .phone, .terms-conditions, .btn {
+    padding : 5px;
+}
+.submit {
+    border: 2px solid transparent;
+    border-radius: 7%;
+    background-color: #32cd32;
+    margin-top: 10px;
+    margin-left: 50px;
+}
+.gender input {
+    padding-left: 15px;
+}
+
+.main {
+    border: 2px solid grey;
+} */
